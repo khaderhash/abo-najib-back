@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name_of_expense');
             $table->double('price');
             $table->enum('category', ['salary', 'bonus', 'investment'])->after('price');
-            $table->foreignId('expense_id')->constrained('users');
+            $table->foreignId('expense_id')->constrained('users')->onDelete('cascade');
 
 
 
