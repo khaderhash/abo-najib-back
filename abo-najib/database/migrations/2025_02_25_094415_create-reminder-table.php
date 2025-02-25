@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->dateTime('time');
             $table->double('price');
+            $table->foreignId('goal_reminder')->constrained('users');
 
 
 

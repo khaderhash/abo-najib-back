@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name_of_income');
             $table->double('price');
             $table->enum('category', ['salary', 'bonus', 'investment'])->after('price');
+            $table->foreignId('income_id')->constrained('users');
 
 
 
