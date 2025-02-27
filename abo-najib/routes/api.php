@@ -9,3 +9,5 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/goal',[GoalController::class,'index']);
+Route::get('/goal/{id}',[GoalController::class,'show']);
+Route::post('/addgoal',[GoalController::class,'store']);

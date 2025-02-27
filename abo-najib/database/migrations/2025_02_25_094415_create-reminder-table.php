@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reminder', function (Blueprint $table) {
+        Schema::create('reminders', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->dateTime('time');

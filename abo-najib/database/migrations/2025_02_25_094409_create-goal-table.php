@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('goal', function (Blueprint $table) {
+        Schema::create('goals', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->dateTime('time');
+            $table->dateTime('time')->nullable();
             $table->double('price');
             $table->enum('category', ['Travel', 'savings', 'Education'])->after('price');
-$table->foreignId('goal_id')->constrained('users')->onDelete('cascade');
+$table->foreignId('user_id')->constrained('users')->onDelete('cascade'); 
 
 
 

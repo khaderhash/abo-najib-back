@@ -9,9 +9,8 @@ class Goal extends Model
 {
 
     use HasFactory;
-    protected $fillable = [
-        'goal_name', 'amount', 'user_id',
-    ];
+    protected $fillable = ['name', 'time', 'price', 'category'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
