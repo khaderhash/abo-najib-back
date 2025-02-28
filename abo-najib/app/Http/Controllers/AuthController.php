@@ -43,21 +43,33 @@ class AuthController extends Controller
             ]);
 
     }
-
-    public function register(Request $request){
+    public function register(Request $request)
+    {
+        // التحقق من صحة البيانات المدخلة
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
         ]);
 
+        // إنشاء المستخدم
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
-        $token = Auth::login($user);
+        // توليد التوكن باستخدام JWTAuth
+        $token = JWTAuth::attempt(['email' => $request->email, 'password' => $request->password]);
+
+        if (!$token) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized',
+            ], 401);
+        }
+
+        // الرد بالتوكن
         return response()->json([
             'status' => 'success',
             'message' => 'User created successfully',
@@ -68,6 +80,30 @@ class AuthController extends Controller
             ]
         ]);
     }
+    // public function register(Request $request){
+    //     $request->validate([
+    //         'name' => 'required|string|max:255',
+    //         'email' => 'required|string|email|max:255|unique:users',
+    //         'password' => 'required|string|min:6',
+    //     ]);
+
+    //     $user = User::create([
+    //         'name' => $request->name,
+    //         'email' => $request->email,
+    //         'password' => Hash::make($request->password),
+    //     ]);
+
+    //     $token = Auth::login($user);
+    //     return response()->json([
+    //         'status' => 'success',
+    //         'message' => 'User created successfully',
+    //         'user' => $user,
+    //         'authorisation' => [
+    //             'token' => $token,
+    //             'type' => 'bearer',
+    //         ]
+    //     ]);
+    // }
 
     public function logout()
     {
