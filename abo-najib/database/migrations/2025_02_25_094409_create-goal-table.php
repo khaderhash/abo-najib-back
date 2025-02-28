@@ -17,7 +17,7 @@ return new class extends Migration
             $table->dateTime('time')->nullable();
             $table->double('price');
             $table->enum('category', ['Travel', 'savings', 'Education'])->after('price');
-$table->foreignId('user_id')->constrained('users')->onDelete('cascade'); 
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
 
 
 

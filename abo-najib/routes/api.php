@@ -11,3 +11,5 @@ Route::get('/user', function (Request $request) {
 Route::get('/goal',[GoalController::class,'index']);
 Route::get('/goal/{id}',[GoalController::class,'show']);
 Route::post('/addgoal',[GoalController::class,'store']);
+Route::post('/updategoal/{id}',[GoalController::class,'update']);
+Route::post('/deletegoal/{id}',[GoalController::class,'destroy']);

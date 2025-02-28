@@ -5,11 +5,11 @@ trait ApiResponseTrait
 {
 public function ApiResponseTrait($data = null, $message = null, $status = 200)
 {
-    $msg = [
+    $arr = [
         'data' => $data,
         'message' => $message,
         'status' => $status,
     ];
-    return response()->json($msg, $status);
+    return response()->json($arr, $status);
 }
 }

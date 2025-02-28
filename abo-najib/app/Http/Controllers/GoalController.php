@@ -91,4 +91,16 @@ public function update(request $request,$id){
         return $this -> ApiResponseTrait(new GoalResource($goal),'the goal update',201);
     }
 }
+public function destroy($id){
+    $goal= Goal::find($id);
+
+    if(!$goal){
+        return $this->ApiResponseTrait(null,'the goal not found',404);
+    }
+    $goal->delete($id);
+    if ($goal){
+        return $this -> ApiResponseTrait(new GoalResource($goal),'the goal deleted',200);
+    }
+
+}
 }
