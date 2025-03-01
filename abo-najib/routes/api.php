@@ -9,11 +9,19 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/goal',[GoalController::class,'index']);
-Route::get('/goal/{id}',[GoalController::class,'show']);
-Route::post('/addgoal',[GoalController::class,'store']);
-Route::post('/updategoal/{id}',[GoalController::class,'update']);
-Route::post('/deletegoal/{id}',[GoalController::class,'destroy']);
+
+
+
+Route::middleware(['jwt.verify'])->group(function(){
+
+
+    Route::get('/goal',[GoalController::class,'index']);
+    Route::get('/goal/{id}',[GoalController::class,'show']);
+    Route::post('/addgoal',[GoalController::class,'store']);
+    Route::post('/updategoal/{id}',[GoalController::class,'update']);
+    Route::post('/deletegoal/{id}',[GoalController::class,'destroy']);
+
+});
 
 
 Route::group([
