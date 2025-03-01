@@ -15,12 +15,14 @@ Route::post('/addgoal',[GoalController::class,'store']);
 Route::post('/updategoal/{id}',[GoalController::class,'update']);
 Route::post('/deletegoal/{id}',[GoalController::class,'destroy']);
 
-Route::post('register', [AuthController::class, 'register']);
-Route::post('login', [AuthController::class, 'login']);
 
-Route::middleware('auth:api')->group(function () {
-    Route::get('profile', [AuthController::class, 'userProfile']);
-    Route::post('logout', [AuthController::class, 'logout']);
-    Route::post('refresh', [AuthController::class, 'refresh']);
-
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function ($router) {
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
+    Route::post('/refresh', [AuthController::class, 'refresh'])->middleware('auth:api');
+    Route::post('/profile', [AuthController::class, 'profile'])->middleware('auth:api');
 });
