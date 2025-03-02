@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
             $table->string('name_of_expense');
+            $table->dateTime('time')->nullable();
             $table->double('price');  // أو استخدم 'amount' إذا كنت تفضل ذلك
             $table->enum('category', ['salary', 'bonus', 'investment'])->after('price');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');

@@ -41,8 +41,9 @@ class ReminderController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'content' => 'required|string|max:255', // محتوى التذكير
-            'date' => 'required|date', // تاريخ التذكير
+            'name' => 'required|string|max:20',
+            'time' => 'required|date',
+            'price' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -50,8 +51,9 @@ class ReminderController extends Controller
         }
 
         $reminder = Reminder::create([
-            'content' => $request->content,
-            'date' => $request->date,
+            'name' => $request->name,
+            'time' => $request->time,
+            'price' => $request->price,
             'user_id' => Auth::id(), // ربط التذكير بالمستخدم
         ]);
 

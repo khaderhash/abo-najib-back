@@ -41,8 +41,10 @@ class IncomeController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'amount' => 'required|numeric', // المبلغ
-            'source' => 'required|string|max:255', // مصدر الدخل
+            'price' => 'required|numeric',
+            'category' => 'required|string',
+            'name_of_income' => 'nullable|string',
+            'time' => 'required|date',
         ]);
 
         if ($validator->fails()) {
@@ -50,9 +52,11 @@ class IncomeController extends Controller
         }
 
         $income = Income::create([
-            'amount' => $request->amount,
-            'source' => $request->source,
-            'user_id' => Auth::id(), // ربط الدخل بالمستخدم
+            'name_of_income' => $request->name_of_expense,
+            'price' => $request->price, 
+            'category' => $request->category,
+            'time' => $request->time,
+            'user_id' => Auth::id(),
         ]);
 
         if ($income) {

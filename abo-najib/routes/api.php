@@ -30,18 +30,18 @@ Route::middleware(['jwt.verify'])->group(function() {
     Route::post('/deleteExpense/{id}', [ExpenseController::class, 'destroy']);
 });
 Route::middleware(['jwt.verify'])->group(function() {
-    Route::get('/Expense', [IncomeController::class, 'index']);
-    Route::get('/Expense/{id}', [IncomeController::class, 'show']);
-    Route::post('/addExpense', [IncomeController::class, 'store']);
-    Route::post('/updateExpense/{id}', [IncomeController::class, 'update']);
-    Route::post('/deleteExpense/{id}', [IncomeController::class, 'destroy']);
+    Route::get('/Income', [IncomeController::class, 'index']);
+    Route::get('/Income/{id}', [IncomeController::class, 'show']);
+    Route::post('/addIncome', [IncomeController::class, 'store']);
+    Route::post('/updateIncome/{id}', [IncomeController::class, 'update']);
+    Route::post('/deleteIncome/{id}', [IncomeController::class, 'destroy']);
 });
 Route::middleware(['jwt.verify'])->group(function() {
-    Route::get('/Expense', [ReminderController::class, 'index']);
-    Route::get('/Expense/{id}', [ReminderController::class, 'show']);
-    Route::post('/addExpense', [ReminderController::class, 'store']);
-    Route::post('/updateExpense/{id}', [ReminderController::class, 'update']);
-    Route::post('/deleteExpense/{id}', [ReminderController::class, 'destroy']);
+    Route::get('/Reminder', [ReminderController::class, 'index']);
+    Route::get('/Reminder/{id}', [ReminderController::class, 'show']);
+    Route::post('/addReminder', [ReminderController::class, 'store']);
+    Route::post('/updateReminder/{id}', [ReminderController::class, 'update']);
+    Route::post('/deleteReminder/{id}', [ReminderController::class, 'destroy']);
 });
 
 

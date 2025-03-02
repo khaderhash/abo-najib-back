@@ -48,7 +48,8 @@ class ExpenseController extends Controller
             'price' => 'required|numeric',
             'category' => 'required|string',
             'name_of_expense' => 'nullable|string',
-            'date' => 'required',
+            'time' => 'required|date',
+
         ]);
 
         if ($validator->fails()) {
@@ -57,9 +58,9 @@ class ExpenseController extends Controller
 
         $expense = Expense::create([
             'name_of_expense' => $request->name_of_expense,
-            'price' => $request->price,  // تأكد من إرسال 'price' بدلاً من 'amount'
+            'price' => $request->price, 
             'category' => $request->category,
-            'date' => $request->date,
+            'time' => $request->time,
             'user_id' => Auth::id(),
         ]);
 
