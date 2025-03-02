@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class GoalResource extends JsonResource
+class ExpenseResource extends JsonResource
 {
     /**
      * تحويل المورد إلى مصفوفة.
@@ -17,11 +17,11 @@ class GoalResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,            // اسم الهدف
-            'time' => $this->time,            // الوقت المحدد
-            'price' => $this->price,          // المبلغ
-            'category' => $this->category,    // الفئة
-            'user_id' => $this->user_id,      // معرف المستخدم
+            'amount' => $this->amount,    // المبلغ
+            'category' => $this->category, // الفئة
+            'description' => $this->description, // الوصف
+            'date' => $this->date,         // التاريخ
+            'user_id' => $this->user_id,   // معرف المستخدم
             'created_at' => $this->created_at, // تاريخ الإنشاء
             'updated_at' => $this->updated_at, // تاريخ التحديث
         ];

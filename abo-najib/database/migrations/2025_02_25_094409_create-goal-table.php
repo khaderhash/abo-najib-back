@@ -16,18 +16,18 @@ return new class extends Migration
             $table->string('name');
             $table->dateTime('time')->nullable();
             $table->double('price');
-            $table->enum('category', ['Travel', 'savings', 'Education'])->after('price');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-
-
-
-        });      }
+            $table->enum('category', ['Travel', 'Savings', 'Education']);
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // الربط بالمستخدم
+            $table->timestamps(); // إضافة created_at و updated_at
+            $table->date('date');
+        });
+    }
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('goals'); // إصلاح عملية التراجع عن الميجريشن
     }
 };

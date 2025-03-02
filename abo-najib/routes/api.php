@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\GoalController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -8,9 +9,6 @@ use App\Http\Controllers\AuthController;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
-
-
-
 
 Route::middleware(['jwt.verify'])->group(function(){
 
@@ -21,6 +19,13 @@ Route::middleware(['jwt.verify'])->group(function(){
     Route::post('/updategoal/{id}',[GoalController::class,'update']);
     Route::post('/deletegoal/{id}',[GoalController::class,'destroy']);
 
+});
+Route::middleware(['jwt.verify'])->group(function() {
+    Route::get('/Expense', [ExpenseController::class, 'index']);
+    Route::get('/Expense/{id}', [ExpenseController::class, 'show']);
+    Route::post('/addExpense', [ExpenseController::class, 'store']);
+    Route::post('/updateExpense/{id}', [ExpenseController::class, 'update']);
+    Route::post('/deleteExpense/{id}', [ExpenseController::class, 'destroy']);
 });
 
 

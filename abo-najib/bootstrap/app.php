@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -12,7 +13,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        // تسجيل الميدل وير الجديد
+        $middleware->alias([
+            'jwt.verify' => \App\Http\Middleware\JwtMiddleware::class, // استخدام ميدل وير جديد هنا
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

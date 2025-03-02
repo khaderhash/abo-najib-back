@@ -16,18 +16,15 @@ return new class extends Migration
             $table->string('name_of_income');
             $table->double('price');
             $table->enum('category', ['salary', 'bonus', 'investment'])->after('price');
-            $table->foreignId('income_id')->constrained('users')->onDelete('cascade');
-
-
-
-
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // الربط بالمستخدم
         });
     }
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('incomes');
     }
 };

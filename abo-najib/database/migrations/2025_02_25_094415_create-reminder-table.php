@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->dateTime('time');
             $table->double('price');
-            $table->foreignId('reminder_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // الربط بالمستخدم
 
 
 

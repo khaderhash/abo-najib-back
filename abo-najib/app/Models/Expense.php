@@ -10,7 +10,7 @@ class Expense extends Model
     use HasFactory;
 
     protected $fillable = [
-        'reminder_name', 'date', 'user_id',
+        'Expense_name', 'date', 'user_id',
     ];
     public function user()
     {

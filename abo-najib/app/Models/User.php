@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -10,13 +9,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements JWTSubject
 {
-use HasFactory;
+    use HasFactory, Notifiable;
+
     protected $fillable = [
         'name',
         'email',
         'password',
     ];
-
 
     protected $hidden = [
         'password',
@@ -30,29 +29,33 @@ use HasFactory;
             'password' => 'hashed',
         ];
     }
+
+    // علاقات المستخدم مع المصاريف
     public function expenses()
     {
-        return $this->hasMany(Expense::class,'expense_id');
+        return $this->hasMany(Expense::class, 'user_id'); // استخدام user_id كمفتاح أجنبي
     }
 
+    // علاقات المستخدم مع الأهداف
     public function goals()
     {
-        return $this->hasMany(Goal::class,'goal_id');
+        return $this->hasMany(Goal::class, 'user_id'); // استخدام user_id كمفتاح أجنبي
     }
 
+    // علاقات المستخدم مع المداخيل
     public function incomes()
     {
-        return $this->hasMany(Income::class,'income_id');
+        return $this->hasMany(Income::class, 'user_id'); // استخدام user_id كمفتاح أجنبي
     }
 
+    // علاقات المستخدم مع التذكيرات
     public function reminders()
     {
-        return $this->hasMany(Reminder::class,'reminder_id');
+        return $this->hasMany(Reminder::class, 'user_id'); // استخدام user_id كمفتاح أجنبي
     }
 
-
     /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
+     * الحصول على المعرف الذي سيتم تخزينه في حقل الموضوع (subject claim) من JWT.
      *
      * @return mixed
      */
@@ -62,7 +65,7 @@ use HasFactory;
     }
 
     /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
+     * إرجاع مصفوفة من القيم لتخصيص JWT.
      *
      * @return array
      */
