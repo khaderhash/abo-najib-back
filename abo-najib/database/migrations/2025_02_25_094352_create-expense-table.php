@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
             $table->string('name_of_expense');
-            $table->double('price');
+            $table->double('price');  // أو استخدم 'amount' إذا كنت تفضل ذلك
             $table->enum('category', ['salary', 'bonus', 'investment'])->after('price');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // الربط بالمستخدم
-            $table->timestamp('date')->nullable();  // إضافة عمود date من النوع timestamp
-            $table->timestamps();  // إضافة الأعمدة created_at و updated_at
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->timestamp('date')->nullable();
+            $table->timestamps();
 
 
 

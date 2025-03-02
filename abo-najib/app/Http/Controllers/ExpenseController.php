@@ -45,9 +45,9 @@ class ExpenseController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'amount' => 'required|numeric',
+            'price' => 'required|numeric',
             'category' => 'required|string',
-            'description' => 'nullable|string',
+            'name_of_expense' => 'nullable|string',
             'date' => 'required',
         ]);
 
@@ -56,12 +56,13 @@ class ExpenseController extends Controller
         }
 
         $expense = Expense::create([
-            'amount' => $request->amount,
+            'name_of_expense' => $request->name_of_expense,
+            'price' => $request->price,  // تأكد من إرسال 'price' بدلاً من 'amount'
             'category' => $request->category,
-            'description' => $request->description,
             'date' => $request->date,
-            'user_id' => Auth::id(), // ربط المصروف بالمستخدم
+            'user_id' => Auth::id(),
         ]);
+
 
         if ($expense) {
             return $this->ApiResponseTrait(new ExpenseResource($expense), 'Expense created successfully', 201);
