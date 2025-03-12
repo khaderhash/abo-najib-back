@@ -13,9 +13,7 @@ class GoalController extends Controller
 {
     use ApiResponseTrait;
 
-    /**
-     * عرض جميع الأهداف الخاصة بالمستخدم الحالي.
-     */
+
     public function index()
     {
         $goals = GoalResource::collection(Goal::where('user_id', Auth::id())->get());
