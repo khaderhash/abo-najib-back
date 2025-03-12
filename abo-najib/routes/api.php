@@ -13,8 +13,6 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::middleware(['jwt.verify'])->group(function(){
-
-
     Route::get('/goal',[GoalController::class,'index']);
     Route::get('/goal/{id}',[GoalController::class,'show']);
     Route::post('/addgoal',[GoalController::class,'store']);
@@ -22,6 +20,8 @@ Route::middleware(['jwt.verify'])->group(function(){
     Route::post('/deletegoal/{id}',[GoalController::class,'destroy']);
 
 });
+
+
 Route::middleware(['jwt.verify'])->group(function() {
     Route::get('/Expense', [ExpenseController::class, 'index']);
     Route::get('/Expense/{id}', [ExpenseController::class, 'show']);
@@ -29,6 +29,8 @@ Route::middleware(['jwt.verify'])->group(function() {
     Route::post('/updateExpense/{id}', [ExpenseController::class, 'update']);
     Route::post('/deleteExpense/{id}', [ExpenseController::class, 'destroy']);
 });
+
+
 Route::middleware(['jwt.verify'])->group(function() {
     Route::get('/Income', [IncomeController::class, 'index']);
     Route::get('/Income/{id}', [IncomeController::class, 'show']);
@@ -36,6 +38,7 @@ Route::middleware(['jwt.verify'])->group(function() {
     Route::post('/updateIncome/{id}', [IncomeController::class, 'update']);
     Route::post('/deleteIncome/{id}', [IncomeController::class, 'destroy']);
 });
+
 Route::middleware(['jwt.verify'])->group(function() {
     Route::get('/Reminder', [ReminderController::class, 'index']);
     Route::get('/Reminder/{id}', [ReminderController::class, 'show']);

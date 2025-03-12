@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('category', ['Travel', 'Savings', 'Education']);
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // الربط بالمستخدم
             $table->timestamps(); // إضافة created_at و updated_at
-            $table->date('date');
+            $table->date('date')->nullable();
         });
     }
 

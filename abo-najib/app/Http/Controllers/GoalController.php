@@ -39,37 +39,73 @@ class GoalController extends Controller
     /**
      * إضافة هدف جديد
      */
+    // public function store(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'name' => 'required|string|max:20',
+    //         'time' => 'required|date',
+    //         'price' => 'required|numeric',
+    //         'category' => 'required|string',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return $this->ApiResponseTrait(null, $validator->errors(), 400);
+    //     }
+    //     if (!$request->has('name')) {
+    //         return $this->ApiResponseTrait(null, 'Name is missing', 400);
+    //     }
+    //     $goal = Goal::create([
+    //         'name' => $request->name,
+    //         'time' => $request->time,
+    //         'price' => $request->price,
+    //         'category' => $request->category,
+    //         'user_id' => Auth::id(), // ربط الهدف بالمستخدم
+    //         'date' => now()->toDateString(),
+    //     ]);
+
+    //     if ($goal) {
+    //         return $this->ApiResponseTrait(new GoalResource($goal), 'Goal created successfully', 201);
+    //     }
+
+    //     return $this->ApiResponseTrait(null, 'Failed to create goal', 400);
+    // }
+
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:20',
-            'time' => 'required|date',
-            'price' => 'required|numeric',
-            'category' => 'required|string',
-        ]);
+        try {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:20',
+                'time' => 'required|date',
+                'price' => 'required|numeric',
+                'category' => 'required|string',
+            ]);
 
-        if ($validator->fails()) {
-            return $this->ApiResponseTrait(null, $validator->errors(), 400);
+            if ($validator->fails()) {
+                return $this->ApiResponseTrait(null, $validator->errors(), 400);
+            }
+
+            // \Log::info($request->all());  // لتسجيل كل البيانات في ملف log
+
+            $goal = Goal::create([
+                'name' => $request->name,
+                'time' => $request->time,
+                'price' => $request->price,
+                'category' => $request->category,
+                'user_id' => Auth::id(),
+                // 'date' => now()->toDateString(),
+            ]);
+
+            if ($goal) {
+                return $this->ApiResponseTrait(new GoalResource($goal), 'Goal created successfully', 201);
+            }
+
+            return $this->ApiResponseTrait(null, 'Failed to create goal', 400);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-
-        $goal = Goal::create([
-            'name' => $request->name,
-            'time' => $request->time,
-            'price' => $request->price,
-            'category' => $request->category,
-            'user_id' => Auth::id(), // ربط الهدف بالمستخدم
-        ]);
-
-        if ($goal) {
-            return $this->apiReApiResponseTraitsponse(new GoalResource($goal), 'Goal created successfully', 201);
-        }
-
-        return $this->ApiResponseTrait(null, 'Failed to create goal', 400);
     }
 
-    /**
-     * حذف هدف
-     */
+
     public function destroy($id)
     {
         $goal = Goal::where('id', $id)->where('user_id', Auth::id())->first();

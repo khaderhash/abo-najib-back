@@ -9,7 +9,7 @@ class Goal extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name_of_Goal', 'time', 'price', 'category', 'user_id'];
+    protected $fillable = ['name', 'time', 'price', 'category', 'user_id'];
 
     public function user()
     {
