@@ -17,13 +17,13 @@ class IncomeResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'amount' => $this->amount,        // المبلغ
-            'source' => $this->source,        // المصدر
-            'description' => $this->description, // الوصف
-            'date' => $this->date,            // التاريخ
-            'user_id' => $this->user_id,      // معرف المستخدم
-            'created_at' => $this->created_at, // تاريخ الإنشاء
-            'updated_at' => $this->updated_at, // تاريخ التحديث
+            'name_of_income' => $this->name_of_expense,
+            'price' => $this->price,
+            'category' => $this->category,
+            'time' => $request->time,
+            'user_id' => $this->user_id,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

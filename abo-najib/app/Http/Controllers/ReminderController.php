@@ -44,6 +44,7 @@ class ReminderController extends Controller
             'name' => 'required|string|max:20',
             'time' => 'required|date',
             'price' => 'required|numeric',
+            'collectedoprice'  => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -55,6 +56,7 @@ class ReminderController extends Controller
             'time' => $request->time,
             'price' => $request->price,
             'user_id' => Auth::id(), // ربط التذكير بالمستخدم
+            'collectedoprice'=> $request->collectedoprice,
         ]);
 
         if ($reminder) {

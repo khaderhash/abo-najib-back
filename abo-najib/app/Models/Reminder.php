@@ -10,7 +10,7 @@ class Reminder extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name', 'time', 'price','user_id',
+        'name', 'price','collectedoprice','user_id','time',
     ];
     public function user()
     {

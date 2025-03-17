@@ -17,11 +17,11 @@ class ExpenseResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'amount' => $this->amount,    // المبلغ
-            'category' => $this->category, // الفئة
-            'description' => $this->description, // الوصف
-            'date' => $this->date,         // التاريخ
-            'user_id' => $this->user_id,   // معرف المستخدم
+            'name_of_expense' => $this->name_of_expense,
+            'price' => $this->price,
+            'category' => $this->category,
+            'time' => $this->time,
+            'user_id' => $this->user_id,
             'created_at' => $this->created_at, // تاريخ الإنشاء
             'updated_at' => $this->updated_at, // تاريخ التحديث
         ];

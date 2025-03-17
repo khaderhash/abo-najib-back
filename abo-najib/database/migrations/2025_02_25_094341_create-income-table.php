@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name_of_income');
             $table->double('price');
+            $table->timestamps();
             $table->dateTime('time')->nullable();
             $table->enum('category', ['salary', 'bonus', 'investment'])->after('price');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // الربط بالمستخدم

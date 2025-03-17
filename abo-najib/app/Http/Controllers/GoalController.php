@@ -74,8 +74,9 @@ class GoalController extends Controller
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:20',
                 'time' => 'required|date',
-                'price' => 'required|numeric',
+                'price' =>'required|numeric',
                 'category' => 'required|string',
+                'collectedmoney'=>'required|numeric',
             ]);
 
             if ($validator->fails()) {
@@ -89,8 +90,9 @@ class GoalController extends Controller
                 'time' => $request->time,
                 'price' => $request->price,
                 'category' => $request->category,
+                'collectedmoney'=> $request->collectedmoney,
                 'user_id' => Auth::id(),
-                // 'date' => now()->toDateString(),
+
             ]);
 
             if ($goal) {

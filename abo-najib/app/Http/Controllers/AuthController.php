@@ -13,13 +13,9 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        // حماية جميع الدوال ما عدا login و register
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
-    /**
-     * تسجيل الدخول
-     */
     public function login(Request $request)
     {
         try {
@@ -43,9 +39,7 @@ class AuthController extends Controller
         }
     }
 
-    /**
-     * تسجيل مستخدم جديد
-     */
+
     public function register(Request $request)
     {
         try {
@@ -70,12 +64,10 @@ class AuthController extends Controller
         }
     }
 
-    /**
-     * تسجيل الخروج
-     */
+
     public function logout()
     {
-        
+
         Auth::logout();
         return response()->json([
             'status' => 'success',
@@ -83,17 +75,13 @@ class AuthController extends Controller
         ]);
     }
 
-    /**
-     * تحديث التوكن
-     */
+
     public function refresh()
     {
         return $this->respondWithToken(Auth::refresh(), Auth::user());
     }
 
-    /**
-     * إرجاع استجابة مع التوكن
-     */
+
     protected function respondWithToken($token, $user = null, $message = 'Login successful')
     {
         return response()->json([

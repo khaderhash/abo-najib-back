@@ -52,8 +52,8 @@ class IncomeController extends Controller
         }
 
         $income = Income::create([
-            'name_of_income' => $request->name_of_expense,
-            'price' => $request->price, 
+            'name_of_income' => $request->name_of_income,
+            'price' => $request->price,
             'category' => $request->category,
             'time' => $request->time,
             'user_id' => Auth::id(),

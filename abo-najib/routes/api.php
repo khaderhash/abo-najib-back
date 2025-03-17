@@ -31,6 +31,22 @@ Route::middleware(['jwt.verify'])->group(function() {
 });
 
 
+
+
+
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function ($router) {
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
+    Route::post('/refresh', [AuthController::class, 'refresh'])->middleware('auth:api');
+    Route::post('/profile', [AuthController::class, 'profile'])->middleware('auth:api');
+});
+
+
 Route::middleware(['jwt.verify'])->group(function() {
     Route::get('/Income', [IncomeController::class, 'index']);
     Route::get('/Income/{id}', [IncomeController::class, 'show']);
@@ -45,17 +61,4 @@ Route::middleware(['jwt.verify'])->group(function() {
     Route::post('/addReminder', [ReminderController::class, 'store']);
     Route::post('/updateReminder/{id}', [ReminderController::class, 'update']);
     Route::post('/deleteReminder/{id}', [ReminderController::class, 'destroy']);
-});
-
-
-
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'auth'
-], function ($router) {
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
-    Route::post('/refresh', [AuthController::class, 'refresh'])->middleware('auth:api');
-    Route::post('/profile', [AuthController::class, 'profile'])->middleware('auth:api');
 });

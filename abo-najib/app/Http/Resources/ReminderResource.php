@@ -17,12 +17,14 @@ class ReminderResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,         // العنوان
-            'description' => $this->description, // الوصف
-            'reminder_date' => $this->reminder_date, // تاريخ التذكير
-            'user_id' => $this->user_id,     // معرف المستخدم
-            'created_at' => $this->created_at, // تاريخ الإنشاء
-            'updated_at' => $this->updated_at, // تاريخ التحديث
+            'title' => $this->title,
+            'description' => $this->description,
+            'price'=>$this->price,
+            'collectedoprice'=> $this->collectedoprice,
+            'user_id' => $this->user_id,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'time'=>$this->time,
         ];
     }
 }

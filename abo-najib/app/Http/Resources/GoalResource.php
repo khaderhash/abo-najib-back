@@ -17,13 +17,14 @@ class GoalResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,            // اسم الهدف
-            'time' => $this->time,            // الوقت المحدد
-            'price' => $this->price,          // المبلغ
-            'category' => $this->category,    // الفئة
-            'user_id' => $this->user_id,      // معرف المستخدم
-            'created_at' => $this->created_at, // تاريخ الإنشاء
-            'updated_at' => $this->updated_at, // تاريخ التحديث
+            'name' => $this->name,
+            'time' => $this->time,
+            'price' => $this->price,
+            'collectedmoney'   => $this->collectedmoney,
+            'category' => $this->category,
+            'user_id' => $this->user_id,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }
