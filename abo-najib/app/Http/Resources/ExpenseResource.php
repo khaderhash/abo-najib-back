@@ -22,8 +22,8 @@ class ExpenseResource extends JsonResource
             'category' => $this->category,
             'time' => $this->time,
             'user_id' => $this->user_id,
-            'created_at' => $this->created_at, // تاريخ الإنشاء
-            'updated_at' => $this->updated_at, // تاريخ التحديث
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

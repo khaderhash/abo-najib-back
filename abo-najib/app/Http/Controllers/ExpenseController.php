@@ -58,7 +58,7 @@ class ExpenseController extends Controller
 
         $expense = Expense::create([
             'name_of_expense' => $request->name_of_expense,
-            'price' => $request->price, 
+            'price' => $request->price,
             'category' => $request->category,
             'time' => $request->time,
             'user_id' => Auth::id(),

@@ -36,7 +36,6 @@ Route::middleware(['jwt.verify'])->group(function() {
 
 
 Route::group([
-    'middleware' => 'api',
     'prefix' => 'auth'
 ], function ($router) {
     Route::post('/register', [AuthController::class, 'register']);
@@ -45,6 +44,10 @@ Route::group([
     Route::post('/refresh', [AuthController::class, 'refresh'])->middleware('auth:api');
     Route::post('/profile', [AuthController::class, 'profile'])->middleware('auth:api');
 });
+Route::post('/send-verification-code', [AuthController::class, 'sendVerificationCode']);
+Route::post('/verify-code', [AuthController::class, 'verifyCode']);
+Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+
 
 
 Route::middleware(['jwt.verify'])->group(function() {

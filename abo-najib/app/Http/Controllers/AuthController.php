@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\VerificationCodeMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -106,6 +108,76 @@ class AuthController extends Controller
             'errors' => $e->errors(),
         ], 422);
     }
+
+
+
+    public function sendVerificationCode(Request $request)
+    {
+        $request->validate(['email' => 'required|email|exists:users,email']);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        $code = rand(100000, 999999);
+        $user->verification_code = $code;
+        $user->save();
+
+        Mail::to($user->email)->send(new VerificationCodeMail($code));
+
+        return response()->json(['message' => 'Verification code sent']);
+    }
+
+    // التحقق من الكود المدخل
+    public function verifyCode(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+            'verification_code' => 'required|numeric'
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if ($user->verification_code === $request->verification_code) {
+            $user->verification_code = null; // مسح الكود بعد التحقق
+            $user->save();
+            return response()->json(['message' => 'Verification successful']);
+        }
+
+        return response()->json(['message' => 'Invalid verification code'], 400);
+    }
+
+    // تغيير كلمة المرور بعد التحقق
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+            'verification_code' => 'required|numeric',
+            'password' => 'required|min:8|confirmed'
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if ($user->verification_code !== $request->verification_code) {
+            return response()->json(['message' => 'Invalid verification code'], 400);
+        }
+
+        // تحديث كلمة المرور
+        $user->password = Hash::make($request->password);
+        $user->verification_code = null;
+        $user->save();
+
+        return response()->json(['message' => 'Password reset successful']);
+    }
+
+
+
+
+
+
+
 }
 
 // namespace App\Http\Controllers;
