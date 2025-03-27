@@ -27,19 +27,24 @@ class AuthController extends Controller
             ]);
 
             $credentials = $request->only('email', 'password');
+            $token = Auth::attempt($credentials); // استخدم attempt مباشرة
 
-            if (!$token = Auth::attempt($credentials)) {
+            if (!$token) {
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Invalid email or password',
                 ], 401);
             }
 
-            return $this->respondWithToken($token);
+            $user = Auth::user();
+            $customToken = JWTAuth::claims(['exp' => now()->addDays(7)->timestamp])->fromUser($user);
+
+            return $this->respondWithToken($token, $user);
         } catch (ValidationException $e) {
             return $this->respondValidationError($e);
         }
     }
+
 
 
     public function register(Request $request)

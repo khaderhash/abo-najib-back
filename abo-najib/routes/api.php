@@ -32,9 +32,6 @@ Route::middleware(['jwt.verify'])->group(function() {
 
 
 
-
-
-
 Route::group([
     'prefix' => 'auth'
 ], function ($router) {
@@ -48,7 +45,9 @@ Route::post('/send-verification-code', [AuthController::class, 'sendVerification
 Route::post('/verify-code', [AuthController::class, 'verifyCode']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 
-
+Route::get('/verify-token', function () {
+    return response()->json(['valid' => true]);
+})->middleware('auth:api');
 
 Route::middleware(['jwt.verify'])->group(function() {
     Route::get('/Income', [IncomeController::class, 'index']);
@@ -63,5 +62,5 @@ Route::middleware(['jwt.verify'])->group(function() {
     Route::get('/Reminder/{id}', [ReminderController::class, 'show']);
     Route::post('/addReminder', [ReminderController::class, 'store']);
     Route::post('/updateReminder/{id}', [ReminderController::class, 'update']);
-    Route::post('/deleteReminder/{id}', [ReminderController::class, 'destroy']);
+    Route::delete('/deleteReminder/{id}', [ReminderController::class, 'destroy']);
 });

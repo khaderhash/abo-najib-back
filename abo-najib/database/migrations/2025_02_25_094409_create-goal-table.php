@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->dateTime('time')->nullable();
             $table->double('price');
-            $table->double('collectedmoney');
+            $table->double('collectedmoney')->nullable();
             $table->enum('category', ['Travel', 'Savings', 'Education']);
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // الربط بالمستخدم
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
             $table->date('date')->nullable();
         });

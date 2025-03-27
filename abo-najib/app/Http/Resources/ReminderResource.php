@@ -17,8 +17,7 @@ class ReminderResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'description' => $this->description,
+            'name' => $this->name,
             'price'=>$this->price,
             'collectedoprice'=> $this->collectedoprice,
             'user_id' => $this->user_id,
