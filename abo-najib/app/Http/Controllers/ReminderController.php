@@ -55,7 +55,7 @@ class ReminderController extends Controller
             'name' => $request->name,
             'time' => $request->time,
             'price' => $request->price,
-            'user_id' => Auth::id(), // ربط التذكير بالمستخدم
+            'user_id' => Auth::id(), 
             'collectedoprice'=> $request->collectedoprice,
         ]);
 

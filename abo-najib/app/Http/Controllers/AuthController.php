@@ -135,7 +135,6 @@ class AuthController extends Controller
         return response()->json(['message' => 'Verification code sent']);
     }
 
-    // التحقق من الكود المدخل
     public function verifyCode(Request $request)
     {
         $request->validate([
@@ -146,7 +145,7 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if ($user->verification_code === $request->verification_code) {
-            $user->verification_code = null; // مسح الكود بعد التحقق
+            $user->verification_code = null;
             $user->save();
             return response()->json(['message' => 'Verification successful']);
         }
@@ -154,7 +153,6 @@ class AuthController extends Controller
         return response()->json(['message' => 'Invalid verification code'], 400);
     }
 
-    // تغيير كلمة المرور بعد التحقق
     public function resetPassword(Request $request)
     {
         $request->validate([
@@ -169,121 +167,28 @@ class AuthController extends Controller
             return response()->json(['message' => 'Invalid verification code'], 400);
         }
 
-        // تحديث كلمة المرور
         $user->password = Hash::make($request->password);
         $user->verification_code = null;
         $user->save();
 
         return response()->json(['message' => 'Password reset successful']);
     }
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required|string',
+            'new_password' => 'required|string|min:6|confirmed',
+        ]);
 
+        $user = Auth::user();
 
+        if (!Hash::check($request->current_password, $user->password)) {
+            return response()->json(['message' => 'Current password is incorrect'], 400);
+        }
 
+        $user->password = Hash::make($request->new_password);
+        $user->save();
 
-
-
-
+        return response()->json(['message' => 'Password changed successfully']);
+    }
 }
-
-// namespace App\Http\Controllers;
-// use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Auth;
-// use Illuminate\Support\Facades\Hash;
-// use App\Models\User;
-// use Tymon\JWTAuth\Facades\JWTAuth;
-
-
-// class AuthController extends Controller
-// {
-
-//     public function __construct()
-//     {
-//         // تعيين middleware لحماية جميع الدوال ما عدا login و register
-//         $this->middleware('auth:api', ['except' => ['login', 'register']]);
-//     }
-
-//     public function login(Request $request)
-//     {
-//         $request->validate([
-//             'email' => 'required|string|email',
-//             'password' => 'required|string',
-//         ]);
-//         $credentials = $request->only('email', 'password');
-
-//         $token = Auth::attempt($credentials);
-//         if (!$token) {
-//             return response()->json([
-//                 'status' => 'error',
-//                 'message' => 'Unauthorized',
-//             ], 401);
-//         }
-
-//         $user = Auth::user();
-//         return response()->json([
-//                 'status' => 'success',
-//                 'user' => $user,
-//                 'authorisation' => [
-//                     'token' => $token,
-//                     'type' => 'bearer',
-//                 ]
-//             ]);
-
-//     }
-
-//     public function register(Request $request) {
-//         try {
-//             $request->validate([
-//                 'name' => 'required|string|max:255',
-//                 'email' => 'required|string|email|max:255|unique:users',
-//                 'password' => 'required|string|min:6',
-//             ]);
-
-//             $user = User::create([
-//                 'name' => $request->name,
-//                 'email' => $request->email,
-//                 'password' => Hash::make($request->password),
-//                 'salary' => 0,
-//             ]);
-
-//             $token = JWTAuth::fromUser($user);
-
-//             return response()->json([
-//                 'status' => 'success',
-//                 'message' => 'User created successfully',
-//                 'user' => $user,
-//                 'authorisation' => [
-//                     'token' => $token,
-//                     'type' => 'bearer',
-//                 ]
-//             ]);
-//         } catch (\Illuminate\Validation\ValidationException $e) {
-//             return response()->json([
-//                 'status' => 'error',
-//                 'message' => 'Validation failed',
-//                 'errors' => $e->errors()
-//             ], 422);
-//         }
-//     }
-
-//     public function logout()
-//     {
-//         Auth::logout();
-//         return response()->json([
-//             'status' => 'success',
-//             'message' => 'Successfully logged out',
-//         ]);
-//     }
-
-//     public function refresh()
-//     {
-//         return response()->json([
-//             'status' => 'success',
-//             'user' => Auth::user(),
-//             'authorisation' => [
-//                 'token' => Auth::refresh(),
-//                 'type' => 'bearer',
-//             ]
-//         ]);
-//     }
-
-// }

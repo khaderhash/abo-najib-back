@@ -30,28 +30,24 @@ class User extends Authenticatable implements JWTSubject
         ];
     }
 
-    // علاقات المستخدم مع المصاريف
     public function expenses()
     {
-        return $this->hasMany(Expense::class, 'user_id'); // استخدام user_id كمفتاح أجنبي
+        return $this->hasMany(Expense::class, 'user_id');
     }
 
-    // علاقات المستخدم مع الأهداف
     public function goals()
     {
-        return $this->hasMany(Goal::class, 'user_id'); // استخدام user_id كمفتاح أجنبي
+        return $this->hasMany(Goal::class, 'user_id');
     }
 
-    // علاقات المستخدم مع المداخيل
     public function incomes()
     {
-        return $this->hasMany(Income::class, 'user_id'); // استخدام user_id كمفتاح أجنبي
+        return $this->hasMany(Income::class, 'user_id');
     }
 
-    // علاقات المستخدم مع التذكيرات
     public function reminders()
     {
-        return $this->hasMany(Reminder::class, 'user_id'); // استخدام user_id كمفتاح أجنبي
+        return $this->hasMany(Reminder::class, 'user_id');
     }
 
     /**

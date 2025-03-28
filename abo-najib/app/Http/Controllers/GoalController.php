@@ -84,4 +84,35 @@ class GoalController extends Controller
 
         return $this->ApiResponseTrait(null, 'Goal deleted successfully', 200);
     }
+    public function update(Request $request, $id)
+{
+    try {
+        $goal = Goal::where('id', $id)->where('user_id', Auth::id())->first();
+
+        if (!$goal) {
+            return $this->ApiResponseTrait(null, 'Goal not found', 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'sometimes|string|max:20',
+            'time' => 'sometimes|date',
+            'price' => 'sometimes|numeric',
+            'category' => 'sometimes|string',
+            'collectedmoney' => 'sometimes|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->ApiResponseTrait(null, $validator->errors(), 400);
+        }
+
+        // تحديث البيانات فقط إذا تم إرسالها في الطلب
+        $goal->update($request->only(['name', 'time', 'price', 'category', 'collectedmoney']));
+
+        return $this->ApiResponseTrait(new GoalResource($goal), 'Goal updated successfully', 200);
+
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+}
+
 }

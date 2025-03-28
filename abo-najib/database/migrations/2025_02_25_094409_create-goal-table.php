@@ -17,7 +17,7 @@ return new class extends Migration
             $table->dateTime('time')->nullable();
             $table->double('price');
             $table->double('collectedmoney')->nullable();
-            $table->enum('category', ['Travel', 'Savings', 'Education']);
+            $table->enum('category', ['Travel', 'Savings', 'Education','Others']);
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
             $table->date('date')->nullable();

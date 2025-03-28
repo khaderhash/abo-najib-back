@@ -16,8 +16,8 @@ Route::middleware(['jwt.verify'])->group(function(){
     Route::get('/goal',[GoalController::class,'index']);
     Route::get('/goal/{id}',[GoalController::class,'show']);
     Route::post('/addgoal',[GoalController::class,'store']);
-    Route::post('/updategoal/{id}',[GoalController::class,'update']);
-    Route::post('/deletegoal/{id}',[GoalController::class,'destroy']);
+    Route::put('/updategoal/{id}',[GoalController::class,'update']);
+    Route::delete('/deletegoal/{id}',[GoalController::class,'destroy']);
 
 });
 
@@ -26,8 +26,8 @@ Route::middleware(['jwt.verify'])->group(function() {
     Route::get('/Expense', [ExpenseController::class, 'index']);
     Route::get('/Expense/{id}', [ExpenseController::class, 'show']);
     Route::post('/addExpense', [ExpenseController::class, 'store']);
-    Route::post('/updateExpense/{id}', [ExpenseController::class, 'update']);
-    Route::post('/deleteExpense/{id}', [ExpenseController::class, 'destroy']);
+    Route::put('/updateExpense/{id}', [ExpenseController::class, 'update']);
+    Route::delete('/deleteExpense/{id}', [ExpenseController::class, 'destroy']);
 });
 
 
@@ -44,6 +44,7 @@ Route::group([
 Route::post('/send-verification-code', [AuthController::class, 'sendVerificationCode']);
 Route::post('/verify-code', [AuthController::class, 'verifyCode']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+Route::post('/changePassword', [AuthController::class, 'changePassword']);
 
 Route::get('/verify-token', function () {
     return response()->json(['valid' => true]);
@@ -54,7 +55,7 @@ Route::middleware(['jwt.verify'])->group(function() {
     Route::get('/Income/{id}', [IncomeController::class, 'show']);
     Route::post('/addIncome', [IncomeController::class, 'store']);
     Route::post('/updateIncome/{id}', [IncomeController::class, 'update']);
-    Route::post('/deleteIncome/{id}', [IncomeController::class, 'destroy']);
+    Route::delete('/deleteIncome/{id}', [IncomeController::class, 'destroy']);
 });
 
 Route::middleware(['jwt.verify'])->group(function() {
